@@ -21,7 +21,7 @@ current_home_team_pitcher_id = ""
 current_inning = inning.Inning(0)
 
 
-game_file = open("./2016eve/2016PHI - Copy.EVN",'r')
+game_file = open("./data/2016PHI - Copy.EVN",'r')
 list_of_comma_separated_game_details = game_file.read().split('\n')
 game_file.close()
 
