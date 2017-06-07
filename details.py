@@ -16,7 +16,7 @@ dict_of_game_details = {}
 dict_of_info = {}
 current_visiting_team_pitcher_id = ""
 current_home_team_pitcher_id = ""
-current_inning = inning.Inning(0)
+current_inning = baseball_stats.Inning(0)
 
 
 game_file = open("./data/2016PHI - Copy.EVN",'r')
@@ -26,31 +26,31 @@ game_file.close()
 for comma_separated_game_details in list_of_comma_separated_game_details:
 	game_details = comma_separated_game_details.split(',')
 	
-	if stats_constants.new_game_key == game_details[stats_constants.data_position]: 
-		stats_methods.set_new_game_item(dict_of_game_details, game_details)
+	if baseball_stats.stats_constants.new_game_key == game_details[baseball_stats.stats_constants.data_position]: 
+		baseball_stats.stats_methods.set_new_game_item(dict_of_game_details, game_details)
 		
-	elif stats_constants.info_key == game_details[stats_constants.data_position]:
-		stats_methods.set_info_item(dict_of_info, game_details)
+	elif baseball_stats.stats_constants.info_key == game_details[baseball_stats.stats_constants.data_position]:
+		baseball_stats.stats_methods.set_info_item(dict_of_info, game_details)
 		
-	elif stats_constants.starter_key == game_details[stats_constants.data_position]: 
-		if game_details[stats_constants.starter_team_ind_position] == str(stats_constants.visiting_team_ind):
-			current_visiting_team_pitcher_id = stats_methods.set_starting_pitcher(game_details) or current_visiting_team_pitcher_id
+	elif baseball_stats.stats_constants.starter_key == game_details[baseball_stats.stats_constants.data_position]: 
+		if game_details[baseball_stats.stats_constants.starter_team_ind_position] == str(baseball_stats.stats_constants.visiting_team_ind):
+			current_visiting_team_pitcher_id = baseball_stats.stats_methods.set_starting_pitcher(game_details) or current_visiting_team_pitcher_id
 		else:
-			current_home_team_pitcher_id = stats_methods.set_starting_pitcher(game_details) or current_home_team_pitcher_id
+			current_home_team_pitcher_id = baseball_stats.stats_methods.set_starting_pitcher(game_details) or current_home_team_pitcher_id
 	
-	elif stats_constants.play_key == game_details[stats_constants.data_position]: 
-		dict_of_batting_info = stats_methods.set_batting_info(game_details)
+	elif baseball_stats.stats_constants.play_key == game_details[baseball_stats.stats_constants.data_position]: 
+		dict_of_batting_info = baseball_stats.stats_methods.set_batting_info(game_details)
 
 		if current_inning.this_inning != int(dict_of_batting_info["inning"]):
-			current_inning = inning.Inning(int(dict_of_batting_info["inning"]))
+			current_inning = baseball_stats.Inning(int(dict_of_batting_info["inning"]))
 
 		current_inning.add_at_bat()
 		
 		current_pitcher = current_home_team_pitcher_id
-		if game_details[stats_constants.home_vis_position] == stats_constants.home_team_ind:
+		if game_details[baseball_stats.stats_constants.home_vis_position] == baseball_stats.stats_constants.home_team_ind:
 			current_pitcher = current_visiting_team_pitcher_id
 		
-		stats_methods.set_at_bat(list_of_at_bats, dict_of_game_details, dict_of_info, current_inning, dict_of_batting_info, current_pitcher)
+		baseball_stats.stats_methods.set_at_bat(list_of_at_bats, dict_of_game_details, dict_of_info, current_inning, dict_of_batting_info, current_pitcher)
 
 print(*list_of_at_bats)
 

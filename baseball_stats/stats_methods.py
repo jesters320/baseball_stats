@@ -1,5 +1,5 @@
 import copy
-import stats_constants
+from . import stats_constants
 
 ###########################
 # Methods
