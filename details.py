@@ -1,6 +1,7 @@
 ###########################
 # Imports
 ###########################
+import sys
 from pymongo import MongoClient
 import json
 from bson import json_util
@@ -17,9 +18,14 @@ dict_of_info = {}
 current_visiting_team_pitcher_id = ""
 current_home_team_pitcher_id = ""
 current_inning = bs.Inning(0)
+data_file_name = "./data/2016PHI - Copy.EVN"
 
 
-game_file = open("./data/2016PHI - Copy.EVN",'r')
+if len(sys.argv) > 1:
+	data_file_name = sys.argv[1]
+
+print("opening ", data_file_name)
+game_file = open(data_file_name,'r')
 list_of_comma_separated_game_details = game_file.read().split('\n')
 game_file.close()
 
@@ -52,15 +58,17 @@ for comma_separated_game_details in list_of_comma_separated_game_details:
 		
 		bs.set_at_bat(list_of_at_bats, dict_of_game_details, dict_of_info, current_inning, dict_of_batting_info, current_pitcher)
 
-print(*list_of_at_bats)
+#print(*list_of_at_bats)
 
 client = MongoClient("mongodb://localhost:27017")
 db = client.baseball_stat_development
-db.stat.delete_many({})
-db.stat.insert_many([{'at_bat': at_bat} for at_bat in list_of_at_bats])
+db.stats.delete_many({})
+for at_bat in list_of_at_bats:
+	db.stats.insert(at_bat)
+#db.stats.insert_many([{'at_bat': at_bat} for at_bat in list_of_at_bats])
 
-print("total at_bats:", db.stat.count())
-one_at_bat = db.stat.find_one()
+print("total at_bats:", db.stats.count())
+one_at_bat = db.stats.find_one()
 print("sample at_bat:", json.dumps(one_at_bat, indent=2, default=json_util.default))
 
 client.close()
