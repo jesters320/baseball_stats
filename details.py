@@ -54,13 +54,13 @@ for comma_separated_game_details in list_of_comma_separated_game_details:
 
 print(*list_of_at_bats)
 
-# client = MongoClient("mongodb://localhost:27017")
-# db = client.baseball_stats
-# db.bs.delete_many({})
-# db.bs.insert_many([{'at_bat': at_bat} for at_bat in list_of_at_bats])
+client = MongoClient("mongodb://localhost:27017")
+db = client.baseball_stat_development
+db.stat.delete_many({})
+db.stat.insert_many([{'at_bat': at_bat} for at_bat in list_of_at_bats])
 
-# print("total at_bats:", db.bs.count())
-# one_at_bat = db.bs.find_one()
-# print("sample at_bat:", json.dumps(one_at_bat, indent=2, default=json_util.default))
+print("total at_bats:", db.stat.count())
+one_at_bat = db.stat.find_one()
+print("sample at_bat:", json.dumps(one_at_bat, indent=2, default=json_util.default))
 
-# client.close()
+client.close()
