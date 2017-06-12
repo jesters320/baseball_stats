@@ -62,13 +62,13 @@ for comma_separated_game_details in list_of_comma_separated_game_details:
 
 client = MongoClient("mongodb://localhost:27017")
 db = client.baseball_stat_development
-db.stats.delete_many({})
+db.at_bats.delete_many({})
 for at_bat in list_of_at_bats:
-	db.stats.insert(at_bat)
-#db.stats.insert_many([{'at_bat': at_bat} for at_bat in list_of_at_bats])
+	db.at_bats.insert(at_bat)
+#db.at_bats.insert_many([{'at_bat': at_bat} for at_bat in list_of_at_bats])
 
-print("total at_bats:", db.stats.count())
-one_at_bat = db.stats.find_one()
+print("total at_bats:", db.at_bats.count())
+one_at_bat = db.at_bats.find_one()
 print("sample at_bat:", json.dumps(one_at_bat, indent=2, default=json_util.default))
 
 client.close()
