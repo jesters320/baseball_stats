@@ -14,9 +14,9 @@ def set_info_item(dict_info, info_details):
 	dict_info[info_details[stats_constants.info_key_position]] = info_details[stats_constants.info_value_position]
 	return
 
-def set_starting_pitcher(starter_details):
-	if starter_details[stats_constants.starter_position_position] == str(stats_constants.pitcher):
-		return starter_details[1]
+def set_current_pitcher(current_details):
+	if current_details[stats_constants.position_position] == str(stats_constants.pitcher):
+		return current_details[1]
 	else:
 		return
 

@@ -38,13 +38,14 @@ for comma_separated_game_details in list_of_comma_separated_game_details:
 	elif bs.stats_constants.info_key == game_details[bs.stats_constants.data_position]:
 		bs.set_info_item(dict_of_info, game_details)
 		
-	elif bs.stats_constants.starter_key == game_details[bs.stats_constants.data_position]: 
+	elif game_details[bs.stats_constants.data_position] in (bs.stats_constants.starter_key, bs.stats_constants.sub_key): 
+		print("starter/sub: ", game_details)
 		if game_details[bs.stats_constants.starter_team_ind_position] == str(bs.stats_constants.visiting_team_ind):
-			current_visiting_team_pitcher_id = bs.set_starting_pitcher(game_details) or current_visiting_team_pitcher_id
+			current_visiting_team_pitcher_id = bs.set_current_pitcher(game_details) or current_visiting_team_pitcher_id
 		else:
-			current_home_team_pitcher_id = bs.set_starting_pitcher(game_details) or current_home_team_pitcher_id
+			current_home_team_pitcher_id = bs.set_current_pitcher(game_details) or current_home_team_pitcher_id
 	
-	elif bs.stats_constants.play_key == game_details[bs.stats_constants.data_position]: 
+	elif bs.stats_constants.play_key == game_details[bs.stats_constants.data_position] and game_details[bs.stats_constants.scorecard_position] != bs.stats_constants.no_play: 
 		dict_of_batting_info = bs.set_batting_info(game_details)
 
 		if current_inning.this_inning != int(dict_of_batting_info["inning"]):
@@ -57,6 +58,10 @@ for comma_separated_game_details in list_of_comma_separated_game_details:
 			current_pitcher = current_visiting_team_pitcher_id
 		
 		bs.set_at_bat(list_of_at_bats, dict_of_game_details, dict_of_info, current_inning, dict_of_batting_info, current_pitcher)
+	elif bs.stats_constants.sub_key == game_details[bs.stats_constants.data_position]: 
+		print("sub: ", game_details)
+	else:
+		print("unhandled: ", game_details)
 
 #print(*list_of_at_bats)
 

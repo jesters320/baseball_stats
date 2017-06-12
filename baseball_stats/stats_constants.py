@@ -7,6 +7,7 @@ new_game_key = "id"
 info_key = "info"
 starter_key = "start"
 play_key = "play"
+sub_key = "sub"
 visiting_team_ind = "0"
 home_team_ind = "1"
 game_id = "game_id"
@@ -19,7 +20,7 @@ new_game_value_position = 1
 info_key_position = 1
 info_value_position = 2
 starter_team_ind_position = 3
-starter_position_position = 5
+position_position = 5
 inning_position = 1
 home_vis_position = 2
 player_id_position = 3
@@ -50,3 +51,6 @@ RBI = "RBI"
 Out = "Out"
 Sacrifice = "Sacrifice"
 current_pitcher = "current_pitcher"
+
+# scorecard
+no_play = "NP"
