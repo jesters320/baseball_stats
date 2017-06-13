@@ -2,5 +2,16 @@ STATUS		DESCRIPTION
 DONE		Save to MongoDB
 DONE		Add batter count per inning
 DONE		Set at_bat_id appropriately based on inning and inning-at_bat_count
+ToDo		Add whether at bat counts as an at bat
+ToDo		Hit indicator
+ToDo		Set player database
+ToDo		Set pitcher database (R or L, type of pitcher, etc.)
+ToDo		Add pitch count (game, inning, at bat)
+ToDo		linked list to prior at bat (game, same team)
+DONE		Initialize test library
+Todo		Catch up test coverage
+
+
+
 			
 			
