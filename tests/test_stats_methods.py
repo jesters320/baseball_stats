@@ -1,5 +1,6 @@
 import unittest
 from baseball_stats.stats_methods import set_new_game_item, set_info_item, set_current_pitcher, set_batting_info, set_at_bat
+from baseball_stats.pitcher import Pitcher
 
 class TestStatsMethods(unittest.TestCase):
 	def test_set_new_game_item(self):
@@ -17,14 +18,14 @@ class TestStatsMethods(unittest.TestCase):
 		starter_details = starter.split(',')
 		current_pitcher = ""
 		current_pitcher = set_current_pitcher(starter_details)
-		self.assertEqual(current_pitcher, "nolaa001")
+		self.assertEqual(current_pitcher.id, Pitcher("nolaa001").id)
 	
 	def test_set_current_pitcher_sub(self):
 		sub = 'sub,handb001,"Brad Hand",0,9,1'
 		sub_details = sub.split(',')
 		current_pitcher = "nolaa001"
 		current_pitcher = set_current_pitcher(sub_details)
-		self.assertEqual(current_pitcher, "handb001")
+		self.assertEqual(current_pitcher.id, Pitcher("handb001").id)
 
 	def test_set_current_pitcher_not_a_pitcher(self):
 		not_a_pitcher = 'start,galvf001,"Freddy Galvis",1,1,6'

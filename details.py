@@ -15,8 +15,8 @@ import baseball_stats as bs
 list_of_at_bats = []
 dict_of_game_details = {}
 dict_of_info = {}
-current_visiting_team_pitcher_id = ""
-current_home_team_pitcher_id = ""
+current_visiting_team_pitcher_id = None
+current_home_team_pitcher_id = None
 current_inning = bs.Inning(0)
 data_file_name = "./data/2016PHI - Copy.EVN"
 
@@ -39,7 +39,6 @@ for comma_separated_game_details in list_of_comma_separated_game_details:
 		bs.set_info_item(dict_of_info, game_details)
 		
 	elif game_details[bs.stats_constants.data_position] in (bs.stats_constants.starter_key, bs.stats_constants.sub_key): 
-		print("starter/sub: ", game_details)
 		if game_details[bs.stats_constants.starter_team_ind_position] == str(bs.stats_constants.visiting_team_ind):
 			current_visiting_team_pitcher_id = bs.set_current_pitcher(game_details) or current_visiting_team_pitcher_id
 		else:
@@ -63,14 +62,14 @@ for comma_separated_game_details in list_of_comma_separated_game_details:
 	else:
 		print("unhandled: ", game_details)
 
-#print(*list_of_at_bats)
+# print(*list_of_at_bats)
 
 client = MongoClient("mongodb://localhost:27017")
 db = client.baseball_stat_development
 db.at_bats.delete_many({})
 for at_bat in list_of_at_bats:
-	db.at_bats.insert(at_bat)
-#db.at_bats.insert_many([{'at_bat': at_bat} for at_bat in list_of_at_bats])
+	db.at_bats.insert_one(at_bat)
+
 
 print("total at_bats:", db.at_bats.count())
 one_at_bat = db.at_bats.find_one()

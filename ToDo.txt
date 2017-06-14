@@ -6,7 +6,21 @@ ToDo		Add whether at bat counts as an at bat
 ToDo		Hit indicator
 ToDo		Set player database
 ToDo		Set pitcher database (R or L, type of pitcher, etc.)
-ToDo		Add pitch count (game, inning, at bat)
+InProgress	Add pitch count (game, inning, pitcher, at bat)
+ToDo		Pitcher
+	DONE		pitch count
+				strikes
+				swinging strikes
+				called strikes
+				foul ball strikes
+				balls in play strikes
+				first pitch strikes
+				batters faced
+	DONE		balls
+				hits
+				ground balls
+				fly balls
+				innings pitched
 ToDo		linked list to prior at bat (game, same team)
 DONE		Initialize test library
 Todo		Catch up test coverage

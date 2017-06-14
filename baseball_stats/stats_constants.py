@@ -1,3 +1,5 @@
+# http://www.retrosheet.org/eventfile.htm
+
 ###########################
 # Constants
 ###########################
@@ -54,3 +56,5 @@ current_pitcher = "current_pitcher"
 
 # scorecard
 no_play = "NP"
+non_pitch_symbols = "*.123"
+strike_symbols = "SCFTXLMKOQRY"
