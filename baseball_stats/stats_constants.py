@@ -56,5 +56,7 @@ current_pitcher = "current_pitcher"
 
 # scorecard
 no_play = "NP"
-non_pitch_symbols = "*.123"
+non_pitch_symbols = "+*.123>"
 strike_symbols = "SCFTXLMKOQRY"
+hit_symbols = ["S", "D", "T", "HR", "H", "DGR"]
+non_at_bat_symbols = ["C", "E", "FC", "FLE", "HP", "I", "W", "IW"]

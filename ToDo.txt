@@ -9,7 +9,7 @@ ToDo		Set pitcher database (R or L, type of pitcher, etc.)
 InProgress	Add pitch count (game, inning, pitcher, at bat)
 ToDo		Pitcher
 	DONE		pitch count
-				strikes
+	DONE		strikes
 				swinging strikes
 				called strikes
 				foul ball strikes
