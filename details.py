@@ -19,11 +19,15 @@ current_visiting_team_pitcher_id = None
 current_home_team_pitcher_id = None
 current_inning = bs.Inning(0)
 data_file_name = "./data/2016PHI - Copy.EVN"
-
+clear_db = 1
 
 if len(sys.argv) > 1:
 	data_file_name = sys.argv[1]
 
+if len(sys.argv) > 2:
+	if sys.argv[2] == "keep":
+		clear_db = 0
+	
 print("opening ", data_file_name)
 game_file = open(data_file_name,'r')
 list_of_comma_separated_game_details = game_file.read().split('\n')
@@ -34,7 +38,7 @@ for comma_separated_game_details in list_of_comma_separated_game_details:
 	
 	# Set up a new game
 	if bs.stats_constants.new_game_key == game_details[bs.stats_constants.data_position]: 
-		bs.set_new_game_item(dict_of_game_details, game_details)
+		bs.set_new_game_item(dict_of_game_details, dict_of_info, game_details)
 		
 	# Set game info
 	elif bs.stats_constants.info_key == game_details[bs.stats_constants.data_position]:
@@ -69,7 +73,8 @@ for comma_separated_game_details in list_of_comma_separated_game_details:
 
 client = MongoClient("mongodb://localhost:27017")
 db = client.baseball_stat_development
-db.at_bats.delete_many({})
+if clear_db == 1:
+	db.at_bats.delete_many({})
 for at_bat in list_of_at_bats:
 	db.at_bats.insert_one(at_bat)
 

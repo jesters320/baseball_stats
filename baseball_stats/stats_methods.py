@@ -6,8 +6,9 @@ from .pitcher import Pitcher
 # Methods
 ###########################
 
-def set_new_game_item(dict_new_game, new_game_details):
+def set_new_game_item(dict_new_game, dict_info, new_game_details):
 	dict_new_game.clear()
+	dict_info.clear()
 	dict_new_game[stats_constants.game_id] = new_game_details[stats_constants.new_game_value_position]
 	return
 
@@ -60,6 +61,6 @@ def set_at_bat(list_at_bat, dict_game, dict_info, current_inning, batting_info, 
 	current_pitcher.strike_count += at_bat_pitch_count - at_bat_ball_count
 	
 	dict_at_bat[stats_constants.current_pitcher] = copy.deepcopy(current_pitcher).__dict__
-	dict_at_bat[stats_constants.info_key] = dict_info
+	dict_at_bat[stats_constants.info_key] = copy.deepcopy(dict_info)
 	list_at_bat.append(dict_at_bat)
 	return	
