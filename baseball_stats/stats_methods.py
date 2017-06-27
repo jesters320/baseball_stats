@@ -43,24 +43,40 @@ def set_batting_info(play_details):
 def set_at_bat(list_at_bat, dict_game, dict_info, current_inning, batting_info, current_pitcher):
 	# eventually break this down so pitch is the smallest atomic object. right now it's "at bat."
 	
-	# copy the game details for this at bat and set the id
+	dict_at_bat = set_game_information_for_at_bat(dict_game, batting_info, current_inning)
+	
+	set_pitch_information_for_at_bat(current_pitcher, batting_info.get(stats_constants.current_pitch_call))
+	
+	outcome = set_outcome_information_for_at_bat(batting_info)
+	
+	dict_at_bat[stats_constants.hit] = outcome.get("hit")
+	
+	# deep copy all objects
+	dict_at_bat[stats_constants.current_pitcher] = copy.deepcopy(current_pitcher).__dict__
+	dict_at_bat[stats_constants.info_key] = copy.deepcopy(dict_info)
+	list_at_bat.append(dict_at_bat)
+	return	
+
+def set_game_information_for_at_bat(dict_game, batting_info, current_inning):
 	dict_at_bat = copy.deepcopy(dict_game)
 	dict_at_bat[stats_constants.at_bat_id] = dict_at_bat.get(stats_constants.game_id) + "_" + batting_info.get(stats_constants.inning) + "_" + str(current_inning.at_bat_count)
 	
 	# add all batting info to the dictionary
 	dict_at_bat.update(batting_info)
+	return dict_at_bat
+
+def set_pitch_information_for_at_bat(current_pitcher, pitch_call):
+	pitches = Pitcher.get_pitch_count(pitch_call)
 	
-	# update details for objects and add them to the at bat
-	normalize_pitch_sequence = batting_info.get(stats_constants.current_pitch_call).translate(str.maketrans('','',stats_constants.non_pitch_symbols))
-	at_bat_pitch_count = len(normalize_pitch_sequence)
-	current_pitcher.pitch_count += at_bat_pitch_count
+	current_pitcher.pitch_count += pitches["count_of_pitches"]
+	current_pitcher.ball_count += pitches["count_of_balls"]
+	current_pitcher.strike_count += pitches["count_of_strikes"]
+	current_pitcher.faced_batters_count += 1
 	
-	balls = normalize_pitch_sequence.translate(str.maketrans('','', stats_constants.strike_symbols))
-	at_bat_ball_count = len(balls)
-	current_pitcher.ball_count += at_bat_ball_count
-	current_pitcher.strike_count += at_bat_pitch_count - at_bat_ball_count
+def set_outcome_information_for_at_bat(batting_info):
+	outcome = {}
+	outcome["hit"] = 0
+	if any(x in batting_info.get(stats_constants.scorecard) for x in stats_constants.hit_symbols):
+		outcome["hit"] = 1
 	
-	dict_at_bat[stats_constants.current_pitcher] = copy.deepcopy(current_pitcher).__dict__
-	dict_at_bat[stats_constants.info_key] = copy.deepcopy(dict_info)
-	list_at_bat.append(dict_at_bat)
-	return	
+	return outcome

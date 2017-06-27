@@ -78,9 +78,9 @@ if clear_db == 1:
 for at_bat in list_of_at_bats:
 	db.at_bats.insert_one(at_bat)
 
-
 print("total at_bats:", db.at_bats.count())
-one_at_bat = db.at_bats.find_one()
-print("sample at_bat:", json.dumps(one_at_bat, indent=2, default=json_util.default))
+three_at_bats = db.at_bats.find().limit(3)
+for at_bat in three_at_bats:
+	print("sample at_bat:", json.dumps(at_bat, indent=2, default=json_util.default))
 
 client.close()

@@ -21,9 +21,9 @@ ToDo		Pitcher
 				foul ball strikes
 				balls in play strikes
 				first pitch strikes
-				batters faced
+	DONE		batters faced
 	DONE		balls
-				hits
+	DONE		hits
 				ground balls
 				fly balls
 				innings pitched

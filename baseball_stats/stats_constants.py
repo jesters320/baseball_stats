@@ -14,6 +14,7 @@ visiting_team_ind = "0"
 home_team_ind = "1"
 game_id = "game_id"
 at_bat_id = "at_bat_id"
+hit = "hit"
 
 # position tags
 data_position = 0
